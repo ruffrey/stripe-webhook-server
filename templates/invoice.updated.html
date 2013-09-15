@@ -1,0 +1,60 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8" />
+<style type="text/css">
+table{ width: 100%; max-width: 500px; }
+table tr{ margin: 0; }
+table td{
+	border: 1px solid #ccc;
+	padding: 6px;
+	margin: 0;
+}
+</style>
+</head>
+<body>
+
+<p>Hello {{customerDescription}},</p>
+
+<p>&nbsp;</p>
+
+<p>Your invoice has been updated.</p>
+
+<p>&nbsp;</p>
+<p>Invoice: {{id}}</p>
+<table>
+<thead>
+	<tr>
+		<th>Qty</th>
+		<th>Description</th>
+		<th>Interval</th>
+		<th>Notes</th>
+		<th>Amount</th>
+	</tr>
+</thead>
+<tbody>
+	{{#each lines}}
+	<tr>
+		<td align="right">{{#if quantity}}  {{quantity}}  {{/if}}</td>
+		
+		<td>{{#if plan}}  {{plan.name}}  {{/if}}</td>
+		<td>{{#if plan}}  {{plan.interval}}ly  {{/if}}</td>
+		
+		<td>{{#if description}}  {{description}}  {{/if}}</td>
+		
+		<td align="right">${{amount}}</td>
+	</tr>
+	{{/each}}
+</tbody>
+</table>
+<p>Total: ${{total}}</p>
+<p>Amount Due: ${{amount_due}}</p>
+<p>&nbsp;</p>
+<p>This invoice will be charged automatically. 
+	Don't hesitate to contact us if you have any questions.</p>
+<p>&nbsp;</p>
+<p>Sincerely,</p>
+<p>{{config.sincerely}}</p>
+
+</body>
+</html>

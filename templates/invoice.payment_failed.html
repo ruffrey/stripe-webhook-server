@@ -1,0 +1,61 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8" />
+<style type="text/css">
+	table{ width: 100%; max-width: 500px; }
+	table tr{ margin: 0; }
+	table td{
+	border: 1px solid #ccc;
+	padding: 6px;
+	margin: 0;
+	}
+</style>
+</head>
+<body>
+
+<p>Hello {{customerDescription}},</p>
+
+<p>&nbsp;</p>
+
+<p>We tried to charge your card for your invoice and the payment failed. 
+	Please sign in and update your payment information.</p>
+
+<p>&nbsp;</p>
+
+<table>
+<thead>
+	<tr>
+		<th>Qty</th>
+		<th>Description</th>
+		<th>Interval</th>
+		<th>Notes</th>
+		<th>Amount</th>
+	</tr>
+</thead>
+<tbody>
+	{{#each lines}}
+	<tr>
+		<td>{{#if quantity}}  {{quantity}}  {{/if}}</td>
+		
+		<td>{{#if plan}}  {{plan.name}}  {{/if}}</td>
+		<td>{{#if plan}}  {{plan.interval}}ly  {{/if}}</td>
+		
+		<td>{{#if description}}  {{description}}  {{/if}}</td>
+		
+		<td>${{amount}}</td>
+	</tr>
+	{{/each}}
+</tbody>
+</table>
+<p>Total: ${{total}}</p>
+<p>Amount Due: ${{amount_due}}</p>
+
+<p> </p>
+<p>We look forward to hearing from you if you have any questions.</p>
+<p>&nbsp;</p>
+<p>Sincerely,</p>
+<p>{{config.sincerely}}</p>
+
+</body>
+</html>

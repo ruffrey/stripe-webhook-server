@@ -1,0 +1,32 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8" />
+</head>
+<body>
+
+<p>Greetings {{customerDescription}},</p>
+
+<p>&nbsp;</p>
+
+<p>We attempted to charge you in the amount of ${{amount}} and
+	it was <strong>not successful</strong>.</p>
+
+<p>{{card_type}} #{{card_last4}}</p>
+<p>{{exp_month}}/{{exp_year}}</p>
+
+<h4>Charge failure message:</h4>
+<h5>{{failure_message}}</h5>
+<p>&nbsp;</p>
+
+<p><strong>Please update your credit card information</strong> on the 
+	Account Settings page. As always, feel free to contact 
+	<a href="mailto:{{config.supportAddress}}">{{config.supportAddress}}</a> 
+	and view the 
+	<a href="{{config.helpUrl}}">support page</a>
+	if you need any assistance.</p>
+<p>&nbsp;</p>
+<p>Sincerely,</p>
+<p>{{config.sincerely}}</p>
+</body>
+</html>
