@@ -1,18 +1,37 @@
 {
   "name": "stripe-webhook-server",
-  "version": "0.1.3",
+  "version": "0.2.0",
+  "main": "routes/index.js",
   "scripts": {
-    "start": "node server.js"
+    "start": "DEBUG=webhooks,webhook-server,webhook-handler,webhook-email node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ruffrey/stripe-webhook-server"
   },
   "dependencies": {
-    "express": "3.1.0",
-    "colors": "*",
     "date-utils": "1.2.x",
-    "nodemailer": "0.4.4",
+    "debug": "^2.0.0",
+    "express": "3.1.0",
     "handlebars": "1.0.12",
+    "nodemailer": "0.4.4",
     "stripe": "~1.3.0"
   },
   "engines": {
-    "node": ">=6.0.0"
-  }
+    "node": "0.8.24"
+  },
+  "description": "This is a standalone scaffold or middleware for responding to [Stripe webhooks](https://stripe.com/docs/webhooks).",
+  "bugs": {
+    "url": "https://github.com/ruffrey/stripe-webhook-server/issues"
+  },
+  "homepage": "https://github.com/ruffrey/stripe-webhook-server",
+  "devDependencies": {},
+  "keywords": [
+    "stripe",
+    "webhook",
+    "scaffold",
+    "payments"
+  ],
+  "author": "Jeff Parrish <jeffhparrish@gmail.com>",
+  "license": "MIT"
 }

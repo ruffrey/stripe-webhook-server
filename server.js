@@ -1,73 +1,53 @@
-
-/**
- * Module dependencies.
- */
-var express = require('express')
-  , http = require('http')
-  , colors = require('colors')
-  , config = require('./config.js')
-  , webhookServer = require('./lib/webhook-server.js')
-  , dateUtils = require('date-utils')
-  , D = require('./lib/d.js')
-  , app = express();
+var debug = require('debug')('webhook-server');
+var express = require('express');
+var http = require('http');
+var config = require('./config.js');
+var routes = require('./routes/');
+var app = express();
 
 
 // Configurations
 app.configure(function(){
 	app.set('env', process.env.NODE_ENV || 'dev');
-	
 	app.use(express.compress({
 		level: 9,
 		memLevel: 9
 	}));
-	
 	app.set('config', config);
-	
-	app.use(express.bodyParser({ keepExtensions: true}));
+	app.use(express.bodyParser({ keepExtensions: true }));
 	app.use(express.limit('1.5mb'));
 	app.use(express.methodOverride());
-	
-	// Passport Authentication
-	
 	app.set('port', config.port);
-	
-	app.set('json spaces',0);
-	
+	app.set('json spaces', 0);
 	app.use(app.router);
-	
-	// honestly this only servers robots.txt
-	app.use(express.static(__dirname+'public'));
+	// this only serves robots.txt
+	app.use(express.static(__dirname + '/public'));
 });
 
-app.configure('dev', function(){
+app.configure('development', function(){
 	app.use(express.errorHandler());
-	app.get('/', webhookServer); // makes testing a little easier
 });
-app.configure('acpt', function(){
-	app.use(express.errorHandler());
-	app.get('/', webhookServer); // makes testing a little easier
-});
-app.configure('prod', function(){
+app.configure('production', function(){
 	app.use(function(err, req, res, next){
-		console.error(D().red);
-		console.error(err.stack.red);
-		res.send(500, 'Something broke!');
+		debug(err);
+		debug(err.stack);
+		res.send(500, {error: 'Something broke!'});
 	});
 });
 
 // bind routes
-app.post('/', webhookServer);
+app.post(config.webhookEndpointPath, routes.webhookHandler(config));
 app.all('*', function(req, res) {
-	res.send(404);
+	setTimeout(function () {
+		debug('404', req.url);
+		res.send(404, { error: 'Route not matched' });
+	}, 1000);
 });
 
 // Starting up the server
-http.createServer(app).listen(app.get('port'), function(){
-	
-	console.log(
-		D(), 
-		"stripe-webhook-server is alive on port".blue.bold, 
+http.createServer(app).listen(app.get('port'), function () {
+	debug(
+		"stripe-webhook-server is alive on port", 
 		app.get('port')
 	);
-	
 });
