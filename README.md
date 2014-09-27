@@ -18,6 +18,8 @@ There is no user interface. [Postman REST Client](https://chrome.google.com/webs
 	$  cd stripe-webhook-server
 	$  npm install
 
+(or, fork it, then clone your own)
+
 Edit `config.example.js` to suit your needs and rename it to `config.js`.
 
 	$  npm start
